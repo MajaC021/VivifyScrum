@@ -4,26 +4,31 @@ import { loginPage } from '../page_objects/loginPOM';
 describe("create board test", () => {
 
   beforeEach("visit board", () => {
-    cy.visit("/login");
-    loginPage.loginUser('test1@gmail.com', 'test123');
-    cy.get('.vs-l-sidebar').should('have.css', 'background-color', 'rgb(41, 41, 41)')
-    cy.url().should('contain', '/my-organizations')
+  loginPage.visitLoginPage
+    cy.intercept({
+      method: "POST",
+      url: "https://cypress-api.vivifyscrum-stage.com/api/v2/login",
+    }).as('loginRequest')
+    loginPage.loginUser();
+    cy.wait('@loginRequest').then((interceptObj) => {
+      expect(interceptObj.response.statusCode).eq(200)
+      loginPage.checkColorSlideBar
+    });
   });
 
   it.only('create Board', () => {
 
     cy.intercept({
       method: "POST",
-      url: " https://cypress-api.vivifyscrum-stage.com/api/v2/boards",
+      url: "https://cypress-api.vivifyscrum-stage.com/api/v2/boards",
     }).as('createBoardRequest')
-    createBoard.createNewBoard('titleTest')
+    createBoard.createNewBoard()
     cy.wait('@createBoardRequest').then((interceptObj) => {
-      console.log('OBJ', interceptObj)
       expect(interceptObj.response.statusCode).eq(201)
-      expect(interceptObj.response.body.name).eq('titleTest')
+      expect(interceptObj.response.body.name).eq(Cypress.env('titleBoard'))
     })
-    cy.get('span').should('contain', 'test1')
-    cy.get('.vs-c-list__btn').should('contain', 'titleTest')
+    createBoard.checkBoardName
+    createBoard.checkBoardTitle
 
   })
 })

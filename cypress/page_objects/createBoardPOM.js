@@ -6,8 +6,11 @@ export default class CreateBoard {
     get nextBtn() { return cy.get('button').contains('Next') }
     get radioBtn() { return cy.get('.vs-c-radio') }
     get finishBtn() { return cy.get('button').contains('Finish') }
+    get checkBoardName() { return cy.get('span').should('contain', 'test1') }
+    get checkBoardTitle() { return cy.get('.vs-c-list__btn').should('contain', Cypress.env('titleBoard')) }
 
-    createNewBoard(titleBoard) {
+    createNewBoard() {
+        let titleBoard = Cypress.env("titleBoard")
         createBoard.hoverOver.click({ force: true })
         createBoard.addBoard.click()
         this.titleBoard.type(titleBoard);
