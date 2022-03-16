@@ -1,17 +1,25 @@
 {
   "name": "vivifyscrum",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/cypress open"
+    "test": "cypress open"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^9.5.1"
+    "cypress": "^9.5.2"
   },
   "dependencies": {
     "cypress-real-events": "^1.7.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MajaC021/VivifyScrum.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MajaC021/VivifyScrum/issues"
+  },
+  "homepage": "https://github.com/MajaC021/VivifyScrum#readme",
+  "description": ""
 }
